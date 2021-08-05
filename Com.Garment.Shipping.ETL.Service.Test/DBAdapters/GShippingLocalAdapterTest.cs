@@ -10,7 +10,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Xunit;
 
-namespace Com.Garment.Shipping.ETL.Service.Test.Services
+namespace Com.Garment.Shipping.ETL.Service.Test.DBAdapters
 {
     public class GShippingLocalAdapterTest
     {
@@ -49,7 +49,7 @@ namespace Com.Garment.Shipping.ETL.Service.Test.Services
 
             var data = GenerateModel();
 
-            GShippingLocalAdapter service = new GShippingLocalAdapter(serviceProvider.Object);
+            GShippingLocalService service = new GShippingLocalService(serviceProvider.Object);
             await service.Save(data);
             Assert.True(true);
         }
@@ -70,7 +70,7 @@ namespace Com.Garment.Shipping.ETL.Service.Test.Services
             serviceProvider.Setup(x => x.GetService(typeof(ISqlDataContext<GShippingLocalModel>))).Returns(sqlDataContext.Object);
             serviceProvider.Setup(x => x.GetService(typeof(IGShippingLocalAdapter))).Returns(new GShippingLocalAdapter(serviceProvider.Object));
 
-            GShippingLocalAdapter service = new GShippingLocalAdapter(serviceProvider.Object);
+            GShippingLocalService service = new GShippingLocalService(serviceProvider.Object);
             var result = await service.Get();
             Assert.True(result.Count() > 0);
         }
@@ -90,8 +90,8 @@ namespace Com.Garment.Shipping.ETL.Service.Test.Services
 
             var data = GenerateModel();
 
-            GShippingLocalAdapter service = new GShippingLocalAdapter(serviceProvider.Object);
-            await service.Truncate(data);
+            GShippingLocalService service = new GShippingLocalService(serviceProvider.Object);
+            await service.ClearData(data);
             Assert.True(true);
         }
     }
