@@ -55,7 +55,6 @@ namespace Com.Garment.Shipping.ETL.Service
                 );
             }
 
-
             return new BadRequestObjectResult(new {message = "Failed"});
         }
     }

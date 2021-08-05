@@ -15,7 +15,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Xunit;
 
-namespace Com.Garment.Shipping.ETL.Service.Test.Services
+namespace Com.Garment.Shipping.ETL.Service.Test
 {
     public class ManualETLTest
     {
@@ -51,10 +51,11 @@ namespace Com.Garment.Shipping.ETL.Service.Test.Services
             var mockLogging = new Mock<ILogingETLService>();                       
             mockLogging.Setup(x => x.Update(logModel)).Returns(It.IsAny<Task>());
 
-
             ManualETL service = new ManualETL(mockShippingExport.Object,mockShippingLocal.Object, mockLogging.Object);
 
             var result = await service.Run(request.Object, logger.Object);
+
+            Assert.NotNull(result);
         }
     }
 }
