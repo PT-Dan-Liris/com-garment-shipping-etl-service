@@ -25,6 +25,8 @@ namespace Com.Garment.Shipping.ETL.Service.Test.DBAdapters
                 DateTime.Now,
                 guid,
                 guid,
+                guid,
+                guid,
                 rnd.Next(1, 10),
                 rnd.Next(1, 10),
                 guid,

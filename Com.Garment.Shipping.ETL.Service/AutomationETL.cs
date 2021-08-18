@@ -81,7 +81,7 @@ namespace Com.Garment.Shipping.ETL.Service
                 await _gShippingExportService.Save(result);
 
                 var resultLocal = await _gShippingLocalService.Get();
-                await _gShippingLocalService.Save(resultLocal);
+                await _gShippingLocalService.ClearData(resultLocal);
                 await _gShippingLocalService.Save(resultLocal);
 
                 await GenerateLoging(true);
