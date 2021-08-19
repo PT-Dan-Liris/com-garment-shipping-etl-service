@@ -44,7 +44,7 @@ namespace Com.Garment.Shipping.ETL.Service
         }
 
         [FunctionName("automation-etl-batch-2")]
-        public async Task AutomationETLBatch2([TimerTrigger("0 */5 * * * *")] TimerInfo myTimer, ILogger log)
+        public async Task AutomationETLBatch2([TimerTrigger("0 0 20 * * *")] TimerInfo myTimer, ILogger log)
         {
             log.LogInformation($"C# Timer trigger function executed at: {DateTime.Now}");
 
