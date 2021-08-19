@@ -29,34 +29,34 @@ namespace Com.Garment.Shipping.ETL.Service
         }
 
         [FunctionName("automation-etl-batch-1")]
-        public async Task AutomationETLBatch1([TimerTrigger("0 0/2 * 1/1 * ? *")]TimerInfo myTimer, ILogger log)
+        public async Task AutomationETLBatch1([TimerTrigger("0 12 * * *")]TimerInfo myTimer, ILogger log)
         {
-            log.LogInformation($"C# Timer trigger function executed at 1: {DateTime.Now}");
+            log.LogInformation($"C# Timer trigger function executed at: {DateTime.Now}");
 
-            // try
-            // {
-            //     await RunETL();
-            // }
-            // catch (Exception ex)
-            // {
-            //     throw ex;
-            // }
+            try
+            {
+                await RunETL();
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
         }
 
         [FunctionName("automation-etl-batch-2")]
-        public async Task AutomationETLBatch2([TimerTrigger("*/2 * * * *")] TimerInfo myTimer, ILogger log)
+        public async Task AutomationETLBatch2([TimerTrigger("0 16 * * *")] TimerInfo myTimer, ILogger log)
         {
-            log.LogInformation($"C# Timer trigger function executed at 2: {DateTime.Now}");
+            log.LogInformation($"C# Timer trigger function executed at: {DateTime.Now}");
 
-            // try
-            // {
-            //     await RunETL();
-            // }
-            // catch (Exception ex)
-            // {
-            //     await GenerateLoging(false);
-            //     throw ex;
-            // }
+            try
+            {
+                await RunETL();
+            }
+            catch (Exception ex)
+            {
+                await GenerateLoging(false);
+                throw ex;
+            }
         }
 
         public async Task GenerateLoging(bool status)
