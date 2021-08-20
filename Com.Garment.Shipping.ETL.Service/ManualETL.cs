@@ -65,7 +65,7 @@ namespace Com.Garment.Shipping.ETL.Service
                 var loggingExportData = new LogingETLModel(
                     data.Id,
                     data.DataArea,
-                    DateTime.Now,
+                    DateTime.UtcNow,
                     tokenPayload.GetUsername(),
                     true
                 );
