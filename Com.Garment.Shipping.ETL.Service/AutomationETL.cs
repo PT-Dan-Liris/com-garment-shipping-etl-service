@@ -64,7 +64,7 @@ namespace Com.Garment.Shipping.ETL.Service
             var data = new LogingETLModel(
                 0,
                 "Garment Shipping",
-                DateTime.Now,
+                DateTime.UtcNow,
                 "SYSTEM",
                 status
             );
