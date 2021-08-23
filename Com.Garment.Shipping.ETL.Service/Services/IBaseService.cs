@@ -7,5 +7,6 @@ namespace Com.Garment.Shipping.ETL.Service.Services
     {
         Task<IEnumerable<TModel>> Get();
         Task Save(IEnumerable<TModel> data);
+        Task ClearData(IEnumerable<TModel> data);
     }
 }

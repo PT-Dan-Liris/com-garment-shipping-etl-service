@@ -3,11 +3,14 @@ using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
+using System.Diagnostics.CodeAnalysis;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace Com.Garment.Shipping.ETL.Service.Helpers
+
 {
+    [ExcludeFromCodeCoverage]
     public class SqlDataContext<TModel> : ISqlDataContext<TModel>
     {
 
@@ -34,6 +37,20 @@ namespace Com.Garment.Shipping.ETL.Service.Helpers
             return result;
         }
 
+        public async Task<int> ExecuteAsync(string query, TModel model)
+        {
+            if(_connectionOrigin.State != ConnectionState.Open)
+                _connectionOrigin.Open(); 
+            
+            var transaction = _connectionOrigin.BeginTransaction();
+            var result = await _connectionOrigin.ExecuteAsync(query, model,  transaction : transaction);
+            transaction.Commit();
+
+            if(_connectionOrigin.State == ConnectionState.Open)
+                _connectionOrigin.Close();
+            return result;
+        }
+
         public async Task<IEnumerable<TModel>> QueryAsync(string query)
         {
             if(_connectionOrigin.State == ConnectionState.Closed)
@@ -46,6 +63,20 @@ namespace Com.Garment.Shipping.ETL.Service.Helpers
 
             if(_connectionOrigin.State == ConnectionState.Open)
                 _connectionOrigin.Close();
+            return result;
+            }
+
+        public async Task<int> ExecuteAsyncTruncate(string query)
+        {
+            if (_connectionDestination.State != ConnectionState.Open)
+                _connectionDestination.Open();
+
+            //var transaction = _connectionDestination.BeginTransaction();
+            var result = await _connectionDestination.ExecuteAsync(query);
+            //transaction.Commit();
+
+            if (_connectionDestination.State == ConnectionState.Open)
+                _connectionDestination.Close();
             return result;
         }
 
@@ -63,6 +94,9 @@ namespace Com.Garment.Shipping.ETL.Service.Helpers
     public interface ISqlDataContext<TModel>
     {
         Task<int> ExecuteAsync(string query, IEnumerable<TModel> model);
+        Task<int> ExecuteAsync(string query, TModel model);
         Task<IEnumerable<TModel>> QueryAsync(string query);
+
+        Task<int> ExecuteAsyncTruncate(string query);
     }
 }
