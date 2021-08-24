@@ -30,7 +30,7 @@ namespace Com.Garment.Shipping.ETL.Service
 
         [FunctionName("manual-etl")]
         public async Task<IActionResult> Run(
-            [HttpTrigger(AuthorizationLevel.Function, "get", "post", Route = null)] HttpRequest req,
+            [HttpTrigger(AuthorizationLevel.Anonymous, "get", "post", Route = null)] HttpRequest req,
             ILogger log)
         {
             req.HttpContext.Response.Headers.Add("Access-Control-Allow-Origin", "*");
